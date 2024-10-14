@@ -1,10 +1,11 @@
 import logging
+import uuid
 from typing import Dict
 from confluent_kafka import Producer
 from config import KafkaConfig
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("RucioKafkaProducer")
 
 
 class RucioKafkaProducer:
@@ -18,7 +19,7 @@ class RucioKafkaProducer:
         self.producer = Producer(config.complete_config())
         self.topic = topic
 
-    def send_event(self, event: Dict) -> None:
+    def send_event(self, events: Dict) -> None:
         """
         Sends an event to Kafka.
 
@@ -44,14 +45,16 @@ class RucioKafkaProducer:
                 )
             )
 
-        self.producer.produce(
-            topic=self.topic,
-            key=str(
-                event.get("key", "default_key")
-            ),  # Use a key if available, otherwise use a default
-            value=str(
-                event
-            ),  # Convert the event to a string or serialize it appropriately
-            callback=delivery_report,
-        )
-        self.producer.flush()
+        for event in events:
+            default_key = str(uuid.uuid4()).encode("utf-8")
+            self.producer.produce(
+                topic=self.topic,
+                key=str(
+                    event.get("key", default_key)
+                ),  # Use a key if available, otherwise use a default
+                value=str(
+                    event
+                ),  # Convert the event to a string or serialize it appropriately
+                callback=delivery_report,
+            )
+            self.producer.flush()
