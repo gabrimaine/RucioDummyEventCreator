@@ -29,15 +29,8 @@ class RucioKafkaProducer:
             """
             Reports the Failure or Success of a message delivery.
             Args:
-                errmsg  (KafkaError): The Error that occurred while message producing.
+                errmsg  (KafkaError): The Error that occurred.
                 msg    (Actual message): The message that was produced.
-            Note:
-                In the delivery report callback the Message.key() and Message.value()
-                will be the binary format as encoded by any configured Serializers and
-                not the same object that was passed to produce().
-                If you wish to pass the original object(s) for key and value to delivery
-                report callback we recommend a bound callback or lambda where you pass
-                the objects along.
             """
 
             if errmsg is not None:

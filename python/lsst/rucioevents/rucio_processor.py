@@ -100,7 +100,7 @@ class RucioProcessor:
             return {}
 
     def _merge_metadata(self) -> Dict:
-        """Merge Rubin metadata and RSE information into a single dictionary."""
+        """Merge Rubin meta and RSE information into a single dictionary."""
         rubin_payload = self._get_all_metadata(self._get_file_names())
         rse_payload = self._get_rse_info()
         merged_dict = {}

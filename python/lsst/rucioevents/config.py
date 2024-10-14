@@ -11,7 +11,8 @@ class KafkaConfig:
         Initializes a new instance of KafkaConfig.
 
         Args:
-            bootstrap_servers: A list of Kafka server addresses in the format "host:port".
+            bootstrap_servers: A list of Kafka server addresses.
+                               The format expected is: "host:port".
                                If None, the default value will be used.
             **kwargs: Additional configuration parameters.
         """
@@ -20,7 +21,7 @@ class KafkaConfig:
 
     @property
     def bootstrap(self) -> str:
-        """Returns a string with the bootstrap server addresses separated by commas."""
+        """Returns a string with the bootstrap server addresses."""
         return ",".join(self.bootstrap_servers)
 
     def get(self, key: str, default=None):

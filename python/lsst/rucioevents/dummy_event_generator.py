@@ -45,7 +45,7 @@ def parse_arguments():
         metavar="TOPIC",
         type=str,
         required=False,
-        help="Specify the Kafka topic for event ingestion. Defaults to the same name as the RSE if not provided.",
+        help="Specify Kafka topic. Defaults to RSE name if not provided.",
     )
 
     parser.add_argument(
