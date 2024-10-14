@@ -4,15 +4,22 @@ rucioevents
 
 This module is designed to generate Kafka events that simulate real events produced by Rucio, enabling the ingestion of files already replicated in a destination butler by ctrl_ingestd.
 It need a valid proxy to access Rucio. 
+
+Setup the environment::
+
+    source /cvmfs/sw.lsst.eu/linux-x86_64/lsst_distrib/w_2024_37/loadLSST.zsh && setup lsst_distrib
+
 To use it::
 
     git clone git@github.com:gabrimaine/RucioDummyEventCreator.git
-    cd RucioDummyEventCreator/python/lsst/rucioevents
-    python dummy_event_generator.py --help
+    cd RucioDummyEventCreator/
+    export PYTHONPATH=$PWD/python:PYTHONPATH
+    scons
+    ./bin/dummy_event_generator --help
 
 Usage::
 
-    dummy_event_generator.py [-h] (-d DID [DID ...] | -f FILE) -r RSE [-t TOPIC] [-v]
+    dummy_event_generator [-h] (-d DID [DID ...] | -f FILE) -r RSE [-t TOPIC] [-v]
 
     Process a list of DIDs and send events to Kafka.
 
