@@ -2,7 +2,7 @@ import logging
 import uuid
 from typing import Dict
 from confluent_kafka import Producer
-from config import KafkaConfig
+from lsst.rucioevents.config import KafkaConfig
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("RucioKafkaProducer")

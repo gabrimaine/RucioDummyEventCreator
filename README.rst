@@ -2,8 +2,8 @@
 rucioevents
 ###########
 
-This module is designed to generate Kafka events that simulate real events produced by Rucio to enable the ingestion of files already replicated in a destination butler by ctrl_ingestd.
-
+This module is designed to generate Kafka events that simulate real events produced by Rucio, enabling the ingestion of files already replicated in a destination butler by ctrl_ingestd.
+It need a valid proxy to access Rucio. 
 To use it::
 
     git clone git@github.com:gabrimaine/RucioDummyEventCreator.git
