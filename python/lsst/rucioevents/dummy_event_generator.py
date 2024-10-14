@@ -7,20 +7,28 @@ from kafka_producer import RucioKafkaProducer
 from rucio.client import Client
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("RucioDummyEventGenerator")
 
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
         description="Process a list of DIDs and send events to Kafka."
     )
-    parser.add_argument(
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
         "-d",
         "--dids",
         metavar="DID",
         type=str,
         nargs="+",
         help='List of DIDs in the format "scope:name".',
+    )
+    group.add_argument(
+        "-f",
+        "--file",
+        metavar="FILE",
+        type=str,
+        help='Path to a file containing a list of DIDs in the format "scope:name", one per line.',
     )
     parser.add_argument(
         "-r",
@@ -39,7 +47,20 @@ def parse_arguments():
         required=False,
         help="Specify the Kafka topic for event ingestion. Defaults to the same name as the RSE if not provided.",
     )
+
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Increase the verbosity level of the output.",
+    )
     return parser.parse_args()
+
+
+def read_dids_from_file(file_path: str) -> List:
+    with open(file_path, "r") as file:
+        dids = [line.strip() for line in file if line.strip()]
+    return dids
 
 
 def process_dids(dids: List, rse: str, topic: str):
@@ -61,7 +82,18 @@ def process_dids(dids: List, rse: str, topic: str):
             logger.error(f"Error processing DID {did}: {e}")
 
 
-if __name__ == "__main__":
+def main():
     args = parse_arguments()
     topic = args.topic or args.rse
-    process_dids(args.dids, args.rse, topic)
+    dids = args.dids or read_dids_from_file(args.file)
+    if args.verbose:
+        logger.info(f"The following list of DIDs will be processed:  {dids}")
+        logger.info(f"The events will be applied to the following RSE: {args.rse}")
+        logger.info(f"The events will be sent to the following topic: {topic}")
+
+
+#    process_dids(dids, args.rse, topic)
+
+
+if __name__ == "__main__":
+    main()
