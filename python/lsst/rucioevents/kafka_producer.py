@@ -5,7 +5,7 @@ from confluent_kafka import Producer
 from config import KafkaConfig
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("RucioKafkaProducer")
 
 
 class RucioKafkaProducer:

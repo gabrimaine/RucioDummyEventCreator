@@ -4,7 +4,7 @@ from rucio.common.exception import DataIdentifierNotFound
 import logging
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("RucioProcessor")
 
 
 class RucioProcessor:
