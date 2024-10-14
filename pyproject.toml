@@ -1,7 +1,7 @@
 # Pytest configuration required to prevent pytest from looking for
 # configurations in parent directories. Can be empty.
 [project]
-name = "lsst-rucio-events"
+name = "lsst-rucioevents"
 requires-python = ">=3.11.0"
 description = "Tools for generating dummy Rucio events"
 license = { text = "GNU General Public License v3 or later (GPLv3+)" }
@@ -24,7 +24,7 @@ profile = "black"
 line_length = 110
 
 [tool.lsst_versions]
-write_to = "python/lsst/rucio/rucioevents/version.py"
+write_to = "python/lsst/rucioevents/version.py"
 
 [tool.pytest.ini_options]
 addopts = "--import-mode=importlib" # Recommended as best practice

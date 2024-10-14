@@ -1,4 +1,5 @@
 import unittest
+import lsst.utils.tests
 from unittest.mock import MagicMock, patch
 from rucio.common.exception import DataIdentifierNotFound
 from rucio_processor import RucioProcessor
@@ -34,5 +35,9 @@ class TestRucioProcessor(unittest.TestCase):
         mock_client.list_files.assert_not_called()  # Non chiamato a causa dell'eccezione
 
 
-if __name__ == "__main__":
-    unittest.main()
+class MemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
+
+
+def setup_module(module):
+    lsst.utils.tests.init()

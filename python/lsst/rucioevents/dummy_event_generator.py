@@ -1,10 +1,10 @@
 import argparse
 import logging
 from typing import List
-from rucio_processor import RucioProcessor
-from event_creator import KafkaEvent
-from kafka_producer import RucioKafkaProducer
 from rucio.client import Client
+from lsst.rucioevents.rucio_processor import RucioProcessor
+from lsst.rucioevents.event_creator import KafkaEvent
+from lsst.rucioevents.kafka_producer import RucioKafkaProducer
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("RucioDummyEventGenerator")
@@ -94,5 +94,5 @@ def main():
     process_dids(dids, args.rse, topic)
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#    main()
