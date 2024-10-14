@@ -19,7 +19,7 @@ To use it::
 
 Usage::
 
-    dummy_event_generator.py [-h] (-d DID [DID ...] | -f FILE) -r RSE [-t TOPIC] [-v]
+    dummy_event_generator [-h] (-d DID [DID ...] | -f FILE) -r RSE [-t TOPIC] [-v]
 
     Process a list of DIDs and send events to Kafka.
 
