@@ -91,8 +91,7 @@ def main():
         logger.info(f"The events will be applied to the following RSE: {args.rse}")
         logger.info(f"The events will be sent to the following topic: {topic}")
 
-
-#    process_dids(dids, args.rse, topic)
+    process_dids(dids, args.rse, topic)
 
 
 if __name__ == "__main__":
