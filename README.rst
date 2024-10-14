@@ -16,7 +16,7 @@ Usage::
 
     Process a list of DIDs and send events to Kafka.
 
-Options:
+  Options:
 
     -h, --help
         show this help message and exit
