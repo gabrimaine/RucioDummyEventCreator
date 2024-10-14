@@ -44,7 +44,7 @@ def parse_arguments():
 
 def process_dids(dids: List, rse: str, topic: str):
     client = Client()
-    kafka_sender = RucioKafkaProducer(rse)
+    kafka_sender = RucioKafkaProducer(topic)
 
     for did in dids:
         scope, name = did.split(":")
