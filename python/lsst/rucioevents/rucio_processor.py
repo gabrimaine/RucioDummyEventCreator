@@ -114,7 +114,7 @@ class RucioProcessor:
         for name, items in rubin_payload.items():
             if items and name in rse_payload:
                 merged_dict[name] = {
-                    **items,  # Unpack the items from rubin_payload
+                    **items,
                     "dst-url": rse_payload[name],  # Add the URL from rse_payload
                     "dst-rse": self.rse,  # Add the RSE
                 }
