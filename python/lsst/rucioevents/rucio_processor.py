@@ -95,7 +95,7 @@ class RucioProcessor:
         logger.info("Getting RSEs")
         try:
             replicas = self.client.list_replicas(
-                [{"scope": self.scope, "name": self.name}]
+                [{"scope": self.scope, "name": self.name}], rse_expression=self.rse
             )
             return {
                 replica["name"]: replica["rses"][self.rse][0]
