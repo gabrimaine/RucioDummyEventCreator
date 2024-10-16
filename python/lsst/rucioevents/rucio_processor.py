@@ -3,7 +3,11 @@ from rucio.client import Client
 from rucio.common.exception import DataIdentifierNotFound
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 logger = logging.getLogger("RucioProcessor")
 
 
@@ -56,12 +60,14 @@ class RucioProcessor:
 
     def _get_file_names(self) -> List[str]:
         """Retrieve the names of all files within a DID."""
+        logger.info("Getting filenames")
         return [file_info["name"] for file_info in self._get_files_info()]
 
     def _get_rubin_payload(self, name: str) -> Optional[Dict]:
         """Retrieve the Rubin metadata of a specific file or container."""
         RUBIN_BUTLER = "rubin_butler"
         RUBIN_SIDECAR = "rubin_sidecar"
+        logger.info(f"Getting metadata for {name}")
         try:
             metas = self.client.get_metadata(self.scope, name=name, plugin="ALL")
             payload = {
@@ -86,6 +92,7 @@ class RucioProcessor:
 
     def _get_rse_info(self) -> Dict[str, str]:
         """Retrieve RSE information for the specified DID."""
+        logger.info("Getting RSEs")
         try:
             replicas = self.client.list_replicas(
                 [{"scope": self.scope, "name": self.name}]

@@ -6,7 +6,12 @@ from lsst.rucioevents.rucio_processor import RucioProcessor
 from lsst.rucioevents.event_creator import KafkaEvent
 from lsst.rucioevents.kafka_producer import RucioKafkaProducer
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 logger = logging.getLogger("RucioDummyEventGenerator")
 
 

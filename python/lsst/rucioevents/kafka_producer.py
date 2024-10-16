@@ -53,9 +53,7 @@ class RucioKafkaProducer:
                 key=str(
                     event.get("key", default_key)
                 ),  # Use a key if available, otherwise use a default
-                value=json.dumps(
-                    event
-                ),  # Convert the event to a string or serialize it appropriately
+                value=json.dumps(event),
                 callback=delivery_report,
             )
             self.producer.flush()
