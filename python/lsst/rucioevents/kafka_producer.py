@@ -1,5 +1,6 @@
 import logging
 import uuid
+import json
 from typing import Dict
 from confluent_kafka import Producer
 from lsst.rucioevents.config import KafkaConfig
@@ -52,7 +53,7 @@ class RucioKafkaProducer:
                 key=str(
                     event.get("key", default_key)
                 ),  # Use a key if available, otherwise use a default
-                value=str(
+                value=json.dumps(
                     event
                 ),  # Convert the event to a string or serialize it appropriately
                 callback=delivery_report,
