@@ -45,6 +45,10 @@ class KafkaEvent:
     def _get_template() -> Dict:
         """Return a simplified payload template."""
         payload_simplified = {
+            "name": "",
+            "scope": "",
+            "dataset": "",
+            "datasetScope": "",
             "dst-rse": "",
             "dst-url": "",
             "rubin_butler": "",

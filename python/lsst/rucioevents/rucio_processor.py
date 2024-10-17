@@ -67,12 +67,20 @@ class RucioProcessor:
         """Retrieve the Rubin metadata of a specific file or container."""
         RUBIN_BUTLER = "rubin_butler"
         RUBIN_SIDECAR = "rubin_sidecar"
+        SCOPE = "scope"
+        NAME = "name"
+        DATASET = "dataset"
+        DATASET_SCOPE = "datasetScope"
         logger.info(f"Getting metadata for {name}")
         try:
             metas = self.client.get_metadata(self.scope, name=name, plugin="ALL")
             payload = {
                 RUBIN_BUTLER: metas.get(RUBIN_BUTLER),
                 RUBIN_SIDECAR: metas.get(RUBIN_SIDECAR),
+                SCOPE: metas.get(SCOPE),
+                NAME: metas.get(NAME),
+                DATASET: self.name,
+                DATASET_SCOPE: self.scope,
             }
             if not any(payload.values()):
                 logger.warning(
