@@ -1,4 +1,5 @@
 import unittest
+import lsst.utils.tests
 from unittest.mock import MagicMock, patch
 from rucio.common.exception import DataIdentifierNotFound
 from lsst.rucioevents.rucio_processor import RucioProcessor
@@ -77,7 +78,14 @@ class TestRucioProcessor(unittest.TestCase):
 
     def test_get_rubin_payload_success(self):
         """Test succesfully _get_rubin_payload."""
-        dummy_metadata = {"rubin_butler": 1, "rubin_sidecar": "sidecar_data"}
+        dummy_metadata = {
+            "rubin_butler": 1,
+            "rubin_sidecar": "sidecar_data",
+            "name": "name",
+            "scope": self.scope,
+            "dataset": self.name,
+            "datasetScope": self.scope,
+        }
         self.mock_client.get_metadata.return_value = dummy_metadata
         result = self.processor._get_rubin_payload("test_file")
         self.assertEqual(result, dummy_metadata)
@@ -95,7 +103,11 @@ class TestRucioProcessor(unittest.TestCase):
         """Succesfull _get_all_metadata."""
         dummy_rubin_payload = {
             "rubin_butler": 1,
-            "rubin_sidecar": '{"id":"8f8ce9b2-98af-58b3-82af-141e4516a5c4"}',
+            "rubin_sidecar": "sidecar_data",
+            "name": "name",
+            "scope": self.scope,
+            "dataset": self.name,
+            "datasetScope": self.scope,
         }
         self.mock_client.get_metadata.return_value = dummy_rubin_payload
         result = self.processor._get_all_metadata(["file1", "file2"])
@@ -164,5 +176,9 @@ class TestRucioProcessor(unittest.TestCase):
         self.assertEqual(result, dummy_merged_data)
 
 
-if __name__ == "__main__":
-    unittest.main()
+class MemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
+
+
+def setup_module(module):
+    lsst.utils.tests.init()

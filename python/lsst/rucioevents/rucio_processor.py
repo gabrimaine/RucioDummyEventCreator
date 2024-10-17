@@ -80,7 +80,7 @@ class RucioProcessor:
                 SCOPE: metas.get(SCOPE),
                 NAME: metas.get(NAME),
                 DATASET: self.name,
-                DATASET_SCOPE: self.scope,
+                DATASET_SCOPE: self.scope,  # I can use also SCOPE directly
             }
             if not any(payload.values()):
                 logger.warning(
