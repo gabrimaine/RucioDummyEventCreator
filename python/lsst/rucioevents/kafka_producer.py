@@ -50,7 +50,7 @@ class RucioKafkaProducer:
             default_key = str(uuid.uuid4()).encode("utf-8")
             self.producer.produce(
                 topic=self.topic,
-                key=str(event.get("key", default_key)),
+                key=event.get("key", default_key),
                 value=json.dumps(event),
                 callback=delivery_report,
             )

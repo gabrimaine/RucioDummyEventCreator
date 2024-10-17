@@ -80,7 +80,7 @@ class RucioProcessor:
                 SCOPE: metas.get(SCOPE),
                 NAME: metas.get(NAME),
                 DATASET: self.name,
-                DATASET_SCOPE: self.scope,
+                DATASET_SCOPE: self.scope,  # I can use also SCOPE directly
             }
             if not any(payload.values()):
                 logger.warning(
@@ -123,7 +123,7 @@ class RucioProcessor:
             if items and name in rse_payload:
                 merged_dict[name] = {
                     **items,
-                    "dst-url": rse_payload[name],  # Add the URL from rse_payload
-                    "dst-rse": self.rse,  # Add the RSE
+                    "dst-url": rse_payload[name],
+                    "dst-rse": self.rse,
                 }
         return merged_dict
