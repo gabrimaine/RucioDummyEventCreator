@@ -66,16 +66,6 @@ class TestRucioProcessor(unittest.TestCase):
         self.assertEqual(result, [])
         self.mock_client.list_files.assert_called_once_with(self.scope, self.name)
 
-        # def test_get_file_names(self):
-        #    """Verifica il caso di successo di _get_file_names."""
-        #    self.mock_client.list_files.return_value = [
-        #        {"scope": "scope1", "name": "name1"},
-        #        {"scope": "scope2", "name": "name2"},
-        #    ]
-        #    self.mock_client.get_did.return_value = {"key": "value"}
-        #    result = self.processor._get_file_names()
-        #    self.assertEqual(result, ["name1", "name2"])
-
     def test_get_rubin_payload_success(self):
         """Test succesfully _get_rubin_payload."""
         dummy_metadata = {

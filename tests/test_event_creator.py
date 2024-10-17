@@ -40,7 +40,7 @@ class TestKafkaEvent(unittest.TestCase):
     def test_process_metadata(self, mock_logger):
         """Chech events creation from dummy metadata."""
         events = self.kafka_event.process_metadata()
-        self.assertEqual(len(events), 2)  # Due file nei metadati fittizi
+        self.assertEqual(len(events), 2)
 
         for event in events:
             self.assertEqual(event["event_type"], KafkaEvent.EVENT_TYPE)
