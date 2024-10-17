@@ -124,12 +124,12 @@ class TestRucioProcessor(unittest.TestCase):
         dummy_replicas = [
             {
                 "name": "file1",
-                "rses": {"other_rse": ["other_rse_url"]},  # RSE diverso
+                "rses": {"other_rse": ["other_rse_url"]},
             }
         ]
         self.mock_client.list_replicas.return_value = dummy_replicas
         result = self.processor._get_rse_info()
-        self.assertEqual(result, {})  # Dovrebbe essere vuoto
+        self.assertEqual(result, {})
 
         def test_merge_metadata(self):
             """Succesfull _merge_metadata."""
