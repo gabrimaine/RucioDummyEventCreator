@@ -77,6 +77,12 @@ def process_dids(dids: List, rse: str, topic: str):
             rucio_client = RucioProcessor(scope, name, rse, client)
             # Estrai i metadati
             payload = rucio_client.get_payload()
+            if len(payload) == 0:
+                logger.warning(
+                    f"No RSE found associated with files in DID {scope}:{name}"
+                )
+                logger.warning(f"Event creation for DID {scope}:{name} stopped")
+                continue
             event_gen = KafkaEvent(payload)
             kafka_sender.send_event(event_gen.process_metadata())
 
