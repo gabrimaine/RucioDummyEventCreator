@@ -60,7 +60,7 @@ class RucioProcessor:
 
     def _get_file_names(self) -> List[str]:
         """Retrieve the names of all files within a DID."""
-        logger.info("Getting filenames")
+        logger.info(f"Getting filenames for DID {self.scope}:{self.name}")
         return [file_info["name"] for file_info in self._get_files_info()]
 
     def _get_rubin_payload(self, name: str) -> Optional[Dict]:
@@ -100,7 +100,7 @@ class RucioProcessor:
 
     def _get_rse_info(self) -> Dict[str, str]:
         """Retrieve RSE information for the specified DID."""
-        logger.info("Getting RSEs")
+        logger.info(f"Getting RSEs for {self.scope}:{self.name}")
         try:
             replicas = self.client.list_replicas(
                 [{"scope": self.scope, "name": self.name}], rse_expression=self.rse
