@@ -4,7 +4,7 @@ from typing import List, Optional, Any, Dict
 class KafkaConfig:
     """Class to manage Kafka configuration."""
 
-    DEFAULT_BOOTSTRAP_SERVERS = ["134.79.23.221:9094"]
+    DEFAULT_BOOTSTRAP_SERVERS = ["134.79.23.189:9094"]
 
     def __init__(self, bootstrap_servers: Optional[List[str]] = None, **kwargs):
         """
