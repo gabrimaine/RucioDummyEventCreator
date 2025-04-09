@@ -10,20 +10,19 @@ logger = logging.getLogger("RucioKafkaProducer")
 
 
 class RucioKafkaProducer:
-    def __init__(self, topic: str):
+    def __init__(self):
         """
         Initializes a Kafka producer to send fakes Rucio events.
-
-        :param topic: The name of the Kafka topic.
         """
         config = KafkaConfig()
         self.producer = Producer(config.complete_config())
-        self.topic = topic
+        # self.topic = topic
 
-    def send_event(self, events: Dict) -> None:
+    def send_event(self, topic: str, events: Dict) -> None:
         """
         Sends an event to Kafka.
 
+        :param topic: The name of the Kafka topic.
         :param event: Dictionary containing the event data.
         """
 
@@ -49,7 +48,7 @@ class RucioKafkaProducer:
         for event in events:
             default_key = str(uuid.uuid4()).encode("utf-8")
             self.producer.produce(
-                topic=self.topic,
+                topic=topic,
                 key=event.get("key", default_key),
                 value=json.dumps(event),
                 callback=delivery_report,

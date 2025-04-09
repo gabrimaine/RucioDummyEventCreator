@@ -20,6 +20,7 @@ class TestDummyEventGenerator(unittest.TestCase):
             rse="test_rse",
             topic=None,
             verbose=False,
+            dry=False,
         )
         args = parse_arguments()
         self.assertEqual(args.dids, ["scope1:name1", "scope2:name2"])
@@ -27,6 +28,7 @@ class TestDummyEventGenerator(unittest.TestCase):
         self.assertEqual(args.rse, "test_rse")
         self.assertIsNone(args.topic)
         self.assertFalse(args.verbose)
+        self.assertFalse(args.dry)
 
     @patch("argparse.ArgumentParser.parse_args")
     def test_parse_arguments_file(self, mock_parse_args):
@@ -37,6 +39,7 @@ class TestDummyEventGenerator(unittest.TestCase):
             rse="test_rse",
             topic="test_topic",
             verbose=True,
+            dry=True,
         )
         args = parse_arguments()
         self.assertIsNone(args.dids)
@@ -44,6 +47,7 @@ class TestDummyEventGenerator(unittest.TestCase):
         self.assertEqual(args.rse, "test_rse")
         self.assertEqual(args.topic, "test_topic")
         self.assertTrue(args.verbose)
+        self.assertTrue(args.dry)
 
     @patch(
         "builtins.open",
@@ -84,7 +88,7 @@ class TestDummyEventGenerator(unittest.TestCase):
         mock_event.assert_called_with({"test": "payload"})
 
         mock_kafka_producer.return_value.send_event.assert_called_with(
-            [{"event": "data"}]
+            "test_topic", [{"event": "data"}]
         )
 
     @patch("lsst.rucioevents.dummy_event_generator.process_dids")
@@ -93,11 +97,16 @@ class TestDummyEventGenerator(unittest.TestCase):
     def test_main_dids(self, mock_parse_args, mock_read_dids, mock_process_dids):
         """Check Process passing --dids."""
         mock_parse_args.return_value = argparse.Namespace(
-            dids=["scope1:name1"], file=None, rse="test_rse", topic=None, verbose=False
+            dids=["scope1:name1"],
+            file=None,
+            rse="test_rse",
+            topic=None,
+            verbose=False,
+            dry=False,
         )
         main()
         mock_process_dids.assert_called_once_with(
-            ["scope1:name1"], "test_rse", "test_rse"
+            ["scope1:name1"], "test_rse", None, False
         )
 
     @patch("lsst.rucioevents.dummy_event_generator.process_dids")
@@ -111,11 +120,12 @@ class TestDummyEventGenerator(unittest.TestCase):
             rse="test_rse",
             topic="test_topic",
             verbose=False,
+            dry=False,
         )
         mock_read_dids.return_value = ["scope1:name1"]
         main()
         mock_process_dids.assert_called_once_with(
-            ["scope1:name1"], "test_rse", "test_topic"
+            ["scope1:name1"], "test_rse", "test_topic", False
         )
 
 
